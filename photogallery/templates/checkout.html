@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-3 py-md-4">
+  <h2 class="checkout mb-2">Checkout</h2>
+  <p class="checkout text-muted mb-3">Review your bookings before payment.</p>
+</div>
+
+{% if pending_booking %}
+<div class="container mt-2 mb-4">
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Photographer</th>
+          <th scope="col" class="text-center">Date & Time</th>
+          <th scope="col" class="text-center">Duration</th>
+          <th scope="col" class="text-end">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ pending_booking.photographer_name }}</td>
+          <td class="text-center">{{ pending_booking.start_time }}</td>
+          <td class="text-center">{{ pending_booking.duration }} Hour{% if pending_booking.duration > 1 %}s{% endif %}</td>
+          <td class="text-end">${{ "%.2f"|format(pending_booking.price) }} AUD</td>
+        </tr>
+      </tbody>
+      <tfoot class="table-light">
+        <tr>
+          <th colspan="4" class="text-end">Total: ${{ "%.2f"|format(pending_booking.price) }} AUD</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<div class="container my-4">
+  <div class="border rounded-4 p-4">
+    <h4 class="checkout"><b>Customer Details</b></h4>
+    {% if user %}
+    <div class="mb-4">
+      <p><b>Name:</b> {{ user.name }}</p>
+      <p><b>Email:</b> {{ user.email }}</p>
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('main.checkout') }}">
+      {{ form.hidden_tag() }}
+
+      <h4 class="checkout mt-4"><b>Payment Details</b></h4>
+
+      <div class="mb-3">
+        {{ form.payment_method.label(class="form-label") }}
+        {{ form.payment_method(class="form-control") }}
+      </div>
+
+      <button type="submit" class="btn btn-success mt-3">Confirm</button>
+    </form>
+  </div>
+</div>
+{% else %}
+<div class="container my-5">
+  <div class="alert">
+    <h4>No Pending Booking</h4>
+    <p>You don't have any pending bookings. Please select a photographer and create a booking first.</p>
+    <a href="{{ url_for('main.vendor_gallery') }}" class="btn btn-primary">Browse Photographers</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

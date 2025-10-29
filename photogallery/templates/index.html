@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="hero-section">
+  <h2 class="container-sm studio-title">Shots that tell your story</h2>
+  <p class="lead text-center">Discover categories, explore portfolios and book your perfect shoot - Weddings, Portraits, Corporate & More</p>
+</main>
+
+<section id="categories" class="additional-content py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Categories</h2>
+    <div class="row g-4">
+      {% set category_images = {
+        'Cat01': 'wedding.png',
+        'Cat02': 'corporate.png',
+        'Cat03': 'portraits.png',
+        'Cat04': 'model.png',
+        'Cat05': 'product.png'
+      } %}
+      {% for category in categories %}
+      <div class="col-md-3">
+        <a href="{{ url_for('main.vendor_gallery') }}">
+          <img src="{{ url_for('static', filename='img/' + category_images.get(category.CategoryID, 'wedding.png')) }}" class="img-fluid rounded" alt="{{ category.Name }}">
+          <p class="mt-2 name">{{ category.Name }}</p>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

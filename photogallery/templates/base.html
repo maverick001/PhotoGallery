@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Studio Essence">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <title>Studio Essence - IFN582_group23</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center navbar-logo-custom" href="{{ url_for('main.index') }}">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" width="50" height="50" class="d-inline-block align-text-top rounded-circle">
+          <span class="fw-bold">Studio Essence</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLight" aria-controls="navbarLight" aria-expanded="false" aria-label="toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarLight">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.index' %}active{% endif %}" aria-current="page" href="{{ url_for('main.index') }}">Home</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.vendor_gallery' %}active{% endif %}" href="{{ url_for('main.vendor_gallery') }}">Photographers</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}#categories">Categories</a></li>
+          {% if session.get('user') and session['user']['user_type'] == 'photographer' %}
+          <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.vendor_management' %}active{% endif %}" href="{{ url_for('main.vendor_management') }}">Upload</a></li>
+          {% endif %}
+          {% if session.get('user') and session['user']['user_type'] == 'admin' %}
+          <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.admin_vendor_management' %}active{% endif %}" href="{{ url_for('main.admin_vendor_management') }}">Vendor Management</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.admin_order_management' %}active{% endif %}" href="{{ url_for('main.admin_order_management') }}">Order Management</a></li>
+          {% elif not session.get('user') or session['user']['user_type'] == 'client' %}
+          <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.vendor_gallery' %}active{% endif %}" href="{{ url_for('main.vendor_gallery') }}">Book a Session</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.endpoint == 'main.checkout' %}active{% endif %}" href="{{ url_for('main.checkout') }}">Checkout</a></li>
+          {% endif %}
+        </ul>
+        <form class="d-flex me-2" action="{{ url_for('main.search') }}" method="get" autocomplete="on">
+          <input class="form-control me-2" type="search" name="q" aria-label="Search" autocomplete="on">
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav">
+          {% if session.get('user') %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ session['user']['name'] }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{{ url_for('main.logout') }}">Logout</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.login') }}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('main.registration') }}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container mt-3">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+
+  <footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>2025 Studio Essence. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>

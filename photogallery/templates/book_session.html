@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <h2 class="mb-4">Book a Session with {{ photographer.FullName }}</h2>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <p><b>Specialization:</b> {{ photographer.Specialization }}</p>
+          <p><b>Location:</b> {{ photographer.Location }}</p>
+          <p><b>Hourly Price:</b> $ {{ photographer.PricePerHr }} AUD</p>
+        </div>
+      </div>
+
+      <form method="POST" action="{{ url_for('main.book_session', photographer_id=photographer.PhotographerID) }}">
+        {{ form.hidden_tag() }}
+
+        <input type="hidden" name="photographer_id" value="{{ photographer.PhotographerID }}">
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea name="descriptions" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Exact Location</label>
+          <input type="text" name="location" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Start Time (YYYY-MM-DD HH:MM)</label>
+          <input type="text" name="start_time" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          {{ form.duration.label(class="form-label") }}
+          <input type="number" name="duration" class="form-control no-spinner" min="1" max="12" required>
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn btn-primary">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow">
+        <div class="card-body p-5">
+          <h2 class="text-center mb-4">Register for Studio Essence</h2>
+
+          <div class="btn-group w-100 mb-4" role="group">
+            <a href="{{ url_for('main.registration', type='client') }}"
+               class="btn {% if user_type == 'client' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+              Register as Client
+            </a>
+            <a href="{{ url_for('main.registration', type='photographer') }}"
+               class="btn {% if user_type == 'photographer' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+              Register as Photographer
+            </a>
+          </div>
+
+          <form method="POST" action="{{ url_for('main.registration', type=user_type) }}">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+              {{ form.full_name.label(class="form-label") }}
+              {{ form.full_name(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.email.label(class="form-label") }}
+              {{ form.email(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.phone.label(class="form-label") }}
+              {{ form.phone(class="form-control") }}
+            </div>
+
+            {% if user_type == 'client' %}
+            <div class="mb-3">
+              {{ form.address.label(class="form-label") }}
+              {{ form.address(class="form-control", rows="3") }}
+            </div>
+            {% else %}
+            <div class="mb-3">
+              {{ form.specialization.label(class="form-label") }}
+              {{ form.specialization(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.biography.label(class="form-label") }}
+              {{ form.biography(class="form-control", rows="3") }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.location.label(class="form-label") }}
+              {{ form.location(class="form-control") }}
+            </div>
+
+            <div class="mb-3">
+              {{ form.price_per_hr.label(class="form-label") }}
+              {{ form.price_per_hr(class="form-control") }}
+            </div>
+            {% endif %}
+
+            <div class="d-grid gap-2 mt-4">
+              {{ form.submit(class="btn btn-primary btn-lg") }}
+            </div>
+          </form>
+
+          <div class="text-center mt-4">
+            <p class="text-muted">Already have an account? <a href="{{ url_for('main.login') }}">Login here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

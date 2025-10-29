@@ -1,0 +1,158 @@
+.studio-title {
+    font-family: sans-serif, cursive;
+    color:antiquewhite;
+    font-size: 4rem;
+    font-weight: bold;
+}
+.hero-section p {
+    font-size: 1.5rem;
+}
+
+.hero-section {
+    background-image: url('/static/img/weddingHero.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    padding: 0 20px;
+    text-align: center;
+}
+
+.lead.text-center {
+    font-family: sans-serif, cursive;
+}
+
+.additional-content {
+    background-color: ghostwhite;
+}
+
+.additional-content h2 {
+    font-family: sans-serif, cursive;
+    color: black;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.additional-content a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.additional-content img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.additional-content .name {
+    font-family: sans-serif, cursive;
+    font-size: 1rem;
+    text-align: center;
+    color: black;
+    margin-top: 0.5rem;
+}
+
+.carousel-img {
+    max-width: 100%;
+    height: 350px;
+    object-fit: contain;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    filter: invert(100%);
+}
+
+.weddingPrice {
+    font-size: 30px;
+    font-style: normal;
+    color: forestgreen;
+    font-weight: bold;
+}
+
+.item-img   {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    border-radius: 8px;
+
+}
+
+.item-text h2 {
+    font-family: sans-serif, cursive;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: black;
+    font-size: 2rem;
+}
+
+.item-text p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.vendor-management {
+    background-color: ghostwhite;
+}
+
+.vendor-management h1 {
+    font-family: sans-serif, cursive;
+    color: black;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.navbar-logo-custom {
+    gap: 20px;
+}
+
+.items-content-photo {
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+}
+
+.checkout {
+    font-family:  sans-serif, cursive;
+    font-weight: 600;
+}
+
+.vendor-gallery{
+    font-family: sans-serif, cursive;
+    color: black;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Hide spinner arrows for number inputs */
+input[type=number].no-spinner::-webkit-outer-spin-button,
+input[type=number].no-spinner::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number].no-spinner {
+    -moz-appearance: textfield;
+}
+
+/* Disable textarea resize handle */
+textarea {
+    resize: none;
+}
+
+/* Hide 'no file chosen' text in file input */
+input[type="file"].form-control {
+    color: transparent;
+}
+
+input[type="file"].form-control::file-selector-button {
+    color: #212529;
+}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="vendor-management py-5">
+  <div class="container py-4">
+    <h1 class="vendor-management mb-1">Photographer Dashboard</h1>
+    <p class="vendor-management mb-0">Upload and manage your portfolio images</p>
+  </div>
+</section>
+
+<main class="container py-5">
+  <div class="row g-4">
+    <div class="col-12 col-lg-5">
+      <div class="card h-100 p-3">
+        <h2 class="items-content">Upload New Image</h2>
+
+        <form method="POST" enctype="multipart/form-data" action="{{ url_for('main.vendor_management') }}">
+          {{ form.hidden_tag() }}
+
+          <div class="mb-3">
+            {{ form.image_file.label(class="form-label") }}
+            {{ form.image_file(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.category_id.label(class="form-label") }}
+            {{ form.category_id(class="form-select") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.visibility.label(class="form-label") }}
+            {{ form.visibility(class="form-select") }}
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            {{ form.submit(class="btn btn-success") }}
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-7">
+      <div class="card p-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="items-content mb-0">Your Photos</h2>
+        </div>
+
+        <div class="items-content mt-3">
+          {% if images %}
+          <div class="row g-3">
+            {% for image in images %}
+            <div class="col-6 col-md-4">
+              <div class="card h-100">
+                <img src="{{ url_for('static', filename='img/' + image.Url) }}" class="items-content-photo" alt="{{ image.Title }}">
+                <div class="card-body text-center">
+                  <h6 class="items-content mb-1">{{ image.Title }}</h6>
+                  <div class="small mb-2">
+                    <span class="badge border border-dark text-dark bg-transparent">
+                      {{ image.Visibility }}
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-center gap-2">
+                    <form method="POST" action="{{ url_for('main.publish_image', image_id=image.ImageID) }}" class="d-inline">
+                      <button type="submit" class="btn btn-sm btn-outline-success">Publish</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('main.hide_image', image_id=image.ImageID) }}" class="d-inline">
+                      <button type="submit" class="btn btn-sm btn-outline-secondary">Hide</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="alert alert-info">
+            <p>You haven't uploaded any images yet. Use the form to upload your first image!</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
