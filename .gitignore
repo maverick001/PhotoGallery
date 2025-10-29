@@ -24,6 +24,7 @@ Thumbs.db
 *.log
 .env
 config_local.py
+CLAUDE.md
 
 # Don't commit database passwords or sensitive config
 # (You should use environment variables instead)
